@@ -167,7 +167,10 @@ function startService() {
   // 写入 PID 文件
   writeFileSync(PID_FILE, child.pid.toString())
 
-  // 日志输出
+  // 日志输出 - 确保日志文件存在
+  if (!existsSync(LOG_FILE)) {
+    writeFileSync(LOG_FILE, '')
+  }
   const logStream = createWriteStream(LOG_FILE, { flags: 'a' })
 
   child.stdout.on('data', (data) => {
