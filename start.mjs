@@ -6,7 +6,7 @@
 
 import { spawn, execSync } from 'child_process'
 import { createInterface } from 'readline'
-import { existsSync, readFileSync, writeFileSync, unlinkSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync, unlinkSync, createWriteStream } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -168,9 +168,7 @@ function startService() {
   writeFileSync(PID_FILE, child.pid.toString())
 
   // 日志输出
-  const logStream = existsSync(LOG_FILE)
-    ? require('fs').createWriteStream(LOG_FILE, { flags: 'a' })
-    : require('fs').createWriteStream(LOG_FILE)
+  const logStream = createWriteStream(LOG_FILE, { flags: 'a' })
 
   child.stdout.on('data', (data) => {
     logStream.write(data)
