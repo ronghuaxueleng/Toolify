@@ -1,0 +1,49 @@
+{
+  "APIKEY": "ronghuaxueleng",
+  "LOG": true,
+  "LOG_LEVEL": "info",
+  "API_TIMEOUT_MS": 600000,
+  "Providers": [
+    {
+      "name": "toolify",
+      "api_base_url": "http://localhost:8000/v1/chat/completions",
+      "api_key": "ronghuaxueleng",
+      "models": [
+        "qwen3-max-2025-10-30",
+        "qwen3-max-2025-10-30-thinking",
+        "qwen3-coder-plus",
+        "qwen3-coder-plus-thinking",
+        "qwen-max-latest",
+        "qwen-max-latest-thinking",
+        "qwq-32b",
+        "qwq-32b-thinking",
+        "qwen2.5-72b-instruct",
+        "qwen2.5-coder-32b-instruct"
+      ]
+    },
+    {
+      "name": "qwen-direct",
+      "api_base_url": "https://qwen.ronghuaxueleng.top/v1/chat/completions",
+      "api_key": "ronghuaxueleng",
+      "models": [
+        "qwen3-max-2025-10-30",
+        "qwen3-coder-plus",
+        "qwen-max-latest",
+        "qwq-32b",
+        "qwen-turbo-2025-02-11"
+      ],
+      "transformer": {
+        "use": [["maxtoken", {"max_tokens": 65536}]],
+        "qwq-32b": {
+          "use": ["reasoning"]
+        }
+      }
+    }
+  ],
+  "Router": {
+    "default": "toolify,qwq-32b",
+    "background": "toolify,qwen-turbo-2025-02-11",
+    "longContext": "qwen-direct,qwen3-max-2025-10-30",
+    "longContextThreshold": 60000
+  }
+}
